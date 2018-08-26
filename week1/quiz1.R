@@ -110,24 +110,29 @@ library(data.table)
 DT <- fread("Q5.csv")
 
 # loop 1000 times for clearer results
-system.time(for (x in 1:1000) {DT[,mean(pwgtp15),by=SEX]} )
+Q51 <- system.time(for (x in 1:1000) {DT[,mean(pwgtp15),by=SEX]} )
+print(Q51)
 # user  system elapsed 
 # 0.78  0.03    0.81 
-system.time(for (x in 1:1000) {mean(DT[DT$SEX==1,]$pwgtp15); mean(DT[DT$SEX==2,]$pwgtp15)})
+Q52 <- system.time(for (x in 1:1000) {mean(DT[DT$SEX==1,]$pwgtp15); mean(DT[DT$SEX==2,]$pwgtp15)})
+print(Q52)
 # user  system elapsed 
 # 34.38  0.02   34.61
-system.time(for (x in 1:1000) {mean(DT$pwgtp15,by=DT$SEX)})
+Q53 <- system.time(for (x in 1:1000) {mean(DT$pwgtp15,by=DT$SEX)})
+print(Q53)
 # user  system elapsed 
 # 0.05   0.00   0.05 
-system.time(for (x in 1:1000) {sapply(split(DT$pwgtp15,DT$SEX),mean)})
+Q54 <- system.time(for (x in 1:1000) {sapply(split(DT$pwgtp15,DT$SEX),mean)})
+print(Q54)
 # user  system elapsed 
 # 0.50   0.01   0.52 
-system.time(for (x in 1:1000) {rowMeans(DT)[DT$SEX==1]; rowMeans(DT)[DT$SEX==2]})
-# Error in rowMeans(DT) : 'x' must be numeric
-# Timing stopped at: 0.92 0.02 0.94
-system.time(for (x in 1:1000) {tapply(DT$pwgtp15,DT$SEX,mean)})
+Q56 <- system.time(for (x in 1:1000) {tapply(DT$pwgtp15,DT$SEX,mean)})
+print(Q56)
 # user  system elapsed 
 # 0.53   0.01   0.54
+Q55 <- system.time(for (x in 1:1000) {rowMeans(DT)[DT$SEX==1]; rowMeans(DT)[DT$SEX==2]})
+# Error in rowMeans(DT) : 'x' must be numeric
+# Timing stopped at: 0.92 0.02 0.94
 
 # mean(DT$pwgtp15,by=DT$SEX)
 
